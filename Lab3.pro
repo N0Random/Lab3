@@ -27,12 +27,14 @@ SOURCES += \
         Main/main.cpp \
         Main/mainwindow.cpp \
     Doc/document.cpp \
-    Doc/doccommands.cpp
+    Doc/doccommands.cpp \
+    Main/doccontroller.cpp
 
 HEADERS += \
         Main/mainwindow.h \
     Doc/document.h \
-    Doc/doccommands.h
+    Doc/doccommands.h \
+    Main/doccontroller.h
 
 FORMS += \
         UI/mainwindow.ui

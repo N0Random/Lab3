@@ -7,7 +7,11 @@ QString Document::getPath() const
 
 void Document::setPath(const QString &_Path)
 {
-    Path = _Path;
+    int indexLastSpliter=0;
+    if( _Path.contains('/'))
+        indexLastSpliter=_Path.lastIndexOf('/');
+    Name = _Path.right(_Path.length()-indexLastSpliter);
+    Path = _Path.left(indexLastSpliter);
 }
 
 QVector<QString> Document::getData() const
@@ -18,17 +22,9 @@ QVector<QString> Document::getData() const
 
 void Document::setData(const QVector<QString> &_Data)
 {
+    Changed=true;
     Data = _Data;
-}
-
-QString Document::getFormate() const
-{
-    return Formate;
-}
-
-void Document::setFormate(const QString &_Formate)
-{
-    Formate = _Formate;
+    emit ChangeData(Data);
 }
 
 void Document::setChanged(bool _Changed)
@@ -41,16 +37,25 @@ bool Document::getChanged() const
     return Changed;
 }
 
+QString Document::getName() const
+{
+    return Name;
+}
+
+void Document::setName(const QString &value)
+{
+    Name = value;
+}
+
 Document::Document()
 {
     Path="";
     Data.reserve(100);
-    Formate="";
+    Name="";
 }
 
 Document::Document(QString _Path)
 {
-    Path = _Path;
+    setPath(_Path);
     Data.reserve(100);
-    Formate = "";
 }

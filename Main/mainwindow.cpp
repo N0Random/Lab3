@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "Doc/doccommands.h"
 #include "ui_mainwindow.h"
 #include "iostream"
 
@@ -8,21 +7,25 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+    docContr.AddCommand("read",new ReadDoc());
+    docContr.AddCommand("write",new WriteDoc());
+    model = new QFileSystemModel();
+    model->setRootPath(QDir::currentPath());
+    ui->treeView->setModel(model);
+    for (int i=1;i<model->columnCount();i++)
+        ui->treeView->hideColumn(i);
+
     QString p="/re.txt";
     QDir dir;
     p=dir.absolutePath()+p;
-    Document doc(p);
-    ReadDoc read(doc);
+    doc=new Document(p);
+    docContr.AddDoc(doc);
+     connect(docContr.getCurrentDoc(),&Document::ChangeData,this,&MainWindow::ShowTextEdit);
+    docContr.AddExecCommand("read");
 
-    read.execute();
-    doc.setChanged(true);
-    QVector<QString> buf=doc.getData();
-    buf.append("New row");
-    doc.setData(buf);
-    WriteDoc wr(doc);
-    wr.execute();
-    for(auto iter:doc.getData())
+    for(auto iter:docContr.getCurrentDoc()->getData())
     {
         std::cout<<iter.toStdString()<<"\n";
     }
@@ -32,3 +35,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::ShowTextEdit(QVector<QString> &Text)
+{
+    QString buf="";
+    for(auto line: Text)
+        buf+=line+"\n";
+    ui->OutView->setText(buf);
+}
+
+
