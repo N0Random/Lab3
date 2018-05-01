@@ -1,9 +1,23 @@
 #include "doccommands.h"
 
-#include <QFile>
-#include <QTextStream>
 
 
+
+
+IDocCommands::IDocCommands(Document &value)
+{
+    doc = &value;
+}
+
+IDocCommands::IDocCommands()
+{
+
+}
+
+void IDocCommands::execute()
+{
+
+}
 
 void IDocCommands::setDoc(Document &value)
 {
@@ -15,35 +29,26 @@ Document *IDocCommands::getDoc() const
     return doc;
 }
 
-IDocCommands::IDocCommands(Document &value)
-{
-    doc = &value;
-}
-
-void IDocCommands::execute()
-{
-
-}
 
 
-
-ReadDoc::ReadDoc(Document &value):IDocCommands(value)
+ReadDoc::ReadDoc(Document &Doc):IDocCommands(Doc)
 {   }
-
+ReadDoc::ReadDoc()
+{   }
 void ReadDoc::execute()
 {
-    if(doc->getPath()=="")
+    if((doc->getPath()+doc->getName())=="")
     {
         QMessageBox msgBox;
         msgBox.setText("Empty path to file");
         msgBox.exec();
     }
-     QFile file(doc->getPath());
+     QFile file(doc->getPath()+doc->getName());
     try
     {
         file.open(QIODevice::ReadOnly | QIODevice::Text);
         QTextStream in(&file);
-        QVector<QString> buf=doc->getData();
+        QVector<QString> buf;
             while (!in.atEnd())
             { 
                 QString line = in.readLine();
@@ -61,13 +66,17 @@ void ReadDoc::execute()
     }
 }
 
+
+
 WriteDoc::WriteDoc(Document &value):IDocCommands(value)
 {   }
+WriteDoc::WriteDoc()
+{    }
 void WriteDoc::execute()
 {
    if(doc->getChanged())
         {
-           QFile file(doc->getPath());
+           QFile file(doc->getPath()+doc->getName());
            file.open(QIODevice::WriteOnly | QIODevice::Text);
            QTextStream outStream(&file);
            for(auto line : doc->getData())
@@ -76,3 +85,5 @@ void WriteDoc::execute()
            file.close();
        }
 }
+
+
