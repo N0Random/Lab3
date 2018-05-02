@@ -22,13 +22,15 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+
+
 private:
    DocController docContr;
    QFileSystemModel *model;
-   Document *doc;
    Ui::MainWindow *ui;
    void ShowTextEdit(QVector<QString> &Text,QTextEdit *ptrTextEdit);
    void NewTab(Document *newDoc);
+   void OpenFile();
    void DeleteTab(int index);
 };
 

@@ -10,8 +10,8 @@ void Document::setPath(const QString &_Path)
     int indexLastSpliter=0;
     if( _Path.contains('/'))
         indexLastSpliter=_Path.lastIndexOf('/');
-    Name = _Path.right(_Path.length()-indexLastSpliter);
-    Path = _Path.left(indexLastSpliter);
+    Name = _Path.right(_Path.length()-indexLastSpliter-1);
+    Path = _Path.left(indexLastSpliter+1);
 }
 
 QVector<QString> Document::getData() const

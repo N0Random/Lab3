@@ -38,3 +38,6 @@ HEADERS += \
 
 FORMS += \
         UI/mainwindow.ui
+
+RESOURCES += \
+    res.qrc

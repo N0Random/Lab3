@@ -3,6 +3,7 @@
 #include "iostream"
 
 #include <QDir>
+#include <QFileDialog>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,30 +15,16 @@ MainWindow::MainWindow(QWidget *parent) :
     docContr.AddCommand("delete",new DeleteDoc());
     docContr.AddCommand("clear",new ClearDoc());
 
-    model = new QFileSystemModel();
-    model->setRootPath(QDir::currentPath());
-    ui->treeView->setModel(model);
-    for (int i=1;i<model->columnCount();i++)
-        ui->treeView->hideColumn(i);
 
-    QString p="/re.txt";
-    QDir dir;
-    p=dir.absolutePath()+p;
-    doc=new Document(p);
-    docContr.AddDoc(doc);
-
-    connect(docContr.getCurrentDoc(),&Document::ChangeData,[=](QVector<QString> &Text){ShowTextEdit(Text,ui->OutView);});
-    connect(ui->OutView,&QTextEdit::textChanged,docContr.getCurrentDoc(),[=](){docContr.SetNewDataDoc(ui->OutView->toPlainText());});
-
+    NewTab(new Document());
     connect(ui->tabWidget,&QTabWidget::tabBarClicked,[=](int index){docContr.setCurrentDoc(index);});
     connect(ui->tabWidget,&QTabWidget::tabCloseRequested,[=](int index){DeleteTab(index);});
 
-    docContr.AddExecCommand("read");
+    connect(ui->aNewFile,&QAction::triggered,[=](){NewTab(new Document());});
+    connect(ui->aOpenFile,&QAction::triggered,[=](){OpenFile();});
+    connect(ui->aSaveFile,&QAction::triggered,[=](){docContr.AddExecCommand("write");});
 
-    for(auto iter:docContr.getCurrentDoc()->getData())
-    {
-        std::cout<<iter.toStdString()<<"\n";
-    }
+
 }
 
 MainWindow::~MainWindow()
@@ -57,7 +44,7 @@ void MainWindow::ShowTextEdit(QVector<QString> &Text,QTextEdit *ptrTextEdit)
 
 void MainWindow::on_pushButton_clicked()
 {
-    NewTab(new Document());
+   docContr.AddExecCommand("clear");
 }
 void MainWindow::DeleteTab(int index)
 {
@@ -72,14 +59,23 @@ void MainWindow::DeleteTab(int index)
 }
 void MainWindow::NewTab(Document *newDoc)
 {
-    QRect geom(30,0,311,221);
     QTextEdit *newTabEdit=new QTextEdit();
     QTabWidget *uiTabWidget=ui->tabWidget;
-    newTabEdit->setGeometry(geom);
     docContr.AddDoc(newDoc);
     connect(docContr.getCurrentDoc(),&Document::ChangeData,[=](QVector<QString> &Text){ShowTextEdit(Text,newTabEdit);});
     connect(newTabEdit,&QTextEdit::textChanged,docContr.getCurrentDoc(),[=](){docContr.SetNewDataDoc(newTabEdit->toPlainText());});
     uiTabWidget->addTab(newTabEdit,newDoc->getName());
     uiTabWidget->setCurrentWidget(newTabEdit);
+
+}
+
+void MainWindow::OpenFile()
+{
+     QString filePath= QFileDialog::getOpenFileName(this,"Open file","","");
+     if(!filePath.isEmpty())
+     {
+        NewTab(new Document(filePath));
+        docContr.AddExecCommand("read");
+     }
 
 }
