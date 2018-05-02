@@ -22,9 +22,7 @@ QVector<QString> Document::getData() const
 
 void Document::setData(const QVector<QString> &_Data)
 {
-    Changed=true;
-    Data = _Data;
-    emit ChangeData(Data);
+    Data = _Data; 
 }
 
 void Document::setChanged(bool _Changed)
@@ -51,11 +49,12 @@ Document::Document()
 {
     Path="";
     Data.reserve(100);
-    Name="";
+    Name="New";
 }
 
 Document::Document(QString _Path)
 {
     setPath(_Path);
+    Changed=false;
     Data.reserve(100);
 }

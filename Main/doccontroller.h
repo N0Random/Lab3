@@ -21,8 +21,11 @@ public:
     void DoCommand();
     void AddDoc(Document* Doc);
     void AddExecCommand(QString NameCom);
+    void SetNewDataDoc(QString newData);
+    void PopDoc(int index);
     Document *getCurrentDoc() const;
     void setCurrentDoc(Document *value);
+    void setCurrentDoc(int index);
     QList<Document *> getAllDoc() const;
 
 signals:

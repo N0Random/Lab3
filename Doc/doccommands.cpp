@@ -55,6 +55,7 @@ void ReadDoc::execute()
                 buf.append(line);
             }
          doc->setData(buf);
+         emit doc->ChangeData(buf);
      }
        catch(...)
     {
@@ -87,3 +88,23 @@ void WriteDoc::execute()
 }
 
 
+ClearDoc::ClearDoc(Document &value):IDocCommands(value)
+{   }
+ClearDoc::ClearDoc()
+{    }
+void ClearDoc::execute()
+{
+    QVector<QString> buf;
+    doc->setData(buf);
+    doc->setChanged(true);
+    doc->ChangeData(buf);
+}
+DeleteDoc::DeleteDoc(Document &value):IDocCommands(value)
+{   }
+DeleteDoc::DeleteDoc()
+{    }
+void DeleteDoc::execute()
+{
+    QFile file(doc->getPath()+doc->getName());
+    file.remove();
+}

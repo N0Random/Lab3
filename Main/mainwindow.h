@@ -3,6 +3,7 @@
 
 #include <QFileSystemModel>
 #include <QMainWindow>
+#include <qtextedit.h>
 #include "Doc/doccommands.h"
 #include "doccontroller.h"
 
@@ -19,16 +20,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void ShowTextEdit(QVector<QString> &Text);
+    void on_pushButton_clicked();
 
 private:
    DocController docContr;
-   void DoCommand(QString NameCommande);
-   QMap<QString,IDocCommands*> mapComands;
-   QList<IDocCommands> logCommands;
    QFileSystemModel *model;
    Document *doc;
    Ui::MainWindow *ui;
+   void ShowTextEdit(QVector<QString> &Text,QTextEdit *ptrTextEdit);
+   void NewTab(Document *newDoc);
+   void DeleteTab(int index);
 };
 
 #endif // MAINWINDOW_H

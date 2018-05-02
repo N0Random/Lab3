@@ -31,4 +31,19 @@ public:
     WriteDoc(Document &value);
     void execute();
 };
+
+class ClearDoc:public IDocCommands
+{
+public:
+    ClearDoc();
+    ClearDoc(Document &value);
+    void execute();
+};
+class DeleteDoc:public IDocCommands
+{
+public:
+    DeleteDoc();
+    DeleteDoc(Document &value);
+    void execute();
+};
 #endif // DOCCOMMANDS_H
