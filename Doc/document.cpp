@@ -49,7 +49,7 @@ Document::Document()
 {
     Path="";
     Data.reserve(100);
-    Name="New";
+    Name="New.txt";
 }
 
 Document::Document(QString _Path)
@@ -57,4 +57,11 @@ Document::Document(QString _Path)
     setPath(_Path);
     Changed=false;
     Data.reserve(100);
+}
+
+Document::Document(QString _Path, QVector<QString> _Data)
+{
+    setPath(_Path);
+    Changed=true;
+    Data = _Data;
 }

@@ -10,10 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    docContr.AddCommand("read",new ReadDoc());
-    docContr.AddCommand("write",new WriteDoc());
-    docContr.AddCommand("delete",new DeleteDoc());
-    docContr.AddCommand("clear",new ClearDoc());
+
 
 
     NewTab(new Document());
@@ -48,14 +45,23 @@ void MainWindow::on_pushButton_clicked()
 }
 void MainWindow::DeleteTab(int index)
 {
+
     docContr.setCurrentDoc(index);
-    QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, "Test", "Save doc ?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes)
-          docContr.AddExecCommand("write");
-    docContr.PopDoc(index);
+    if(docContr.getCurrentDoc()->getChanged())
+        {
+        QMessageBox::StandardButton reply;
+          reply = QMessageBox::question(this, "Test", "Save doc ?",
+                                        QMessageBox::Yes|QMessageBox::No);
+          if (reply == QMessageBox::Yes)
+              docContr.AddExecCommand("write");
+         }
+    if(ui->tabWidget->count()==1)
+          NewTab(new Document());
+    docContr.PopDoc(index);   
+    if(index)
+        ui->tabWidget->setCurrentIndex(index-1);
     ui->tabWidget->removeTab(index);
+
 }
 void MainWindow::NewTab(Document *newDoc)
 {
