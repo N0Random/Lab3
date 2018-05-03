@@ -1,0 +1,24 @@
+<read:log_(03052018_030323938-03052018_030342872).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:29 2018> 
+
+<clear:log_(03052018_030323938-03052018_030342872).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:30 2018> 
+
+<write:log_(03052018_030323938-03052018_030342872).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:32 2018> 
+
+<read:log_(03052018_025511200-03052018_025647531).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:34 2018> 
+
+<clear:log_(03052018_025511200-03052018_025647531).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:35 2018> 
+
+<write:log_(03052018_025511200-03052018_025647531).txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:06:37 2018> 
+

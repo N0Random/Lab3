@@ -1,0 +1,20 @@
+<read:re.txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:20:44 2018> 
+
+<read:re.txt; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:20:51 2018> 
+
+<write:New; 
+ Path:; 
+ Time:Чт май 3 06:21:00 2018> 
+
+<read:New; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:21:05 2018> 
+
+<clear:New; 
+ Path:B:/Prog/build-Lab3-Desktop_Qt_5_10_0_MinGW_32bit-Debug/; 
+ Time:Чт май 3 06:21:07 2018> 
+
