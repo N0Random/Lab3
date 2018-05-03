@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>Icon/icons8-новый-файл-filled.png</file>
+        <file>Icon/icons8-открыть-папку-filled.png</file>
+        <file>Icon/icons8-сохранить-как-filled.png</file>
+    </qresource>
+</RCC>
