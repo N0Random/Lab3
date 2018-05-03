@@ -10,8 +10,8 @@ void Document::setPath(const QString &_Path)
     int indexLastSpliter=0;
     if( _Path.contains('/'))
         indexLastSpliter=_Path.lastIndexOf('/');
-    Name = _Path.right(_Path.length()-indexLastSpliter);
-    Path = _Path.left(indexLastSpliter);
+    Name = _Path.right(_Path.length()-indexLastSpliter-1);
+    Path = _Path.left(indexLastSpliter+1);
 }
 
 QVector<QString> Document::getData() const
@@ -49,7 +49,7 @@ Document::Document()
 {
     Path="";
     Data.reserve(100);
-    Name="New";
+    Name="New.txt";
 }
 
 Document::Document(QString _Path)
@@ -57,4 +57,11 @@ Document::Document(QString _Path)
     setPath(_Path);
     Changed=false;
     Data.reserve(100);
+}
+
+Document::Document(QString _Path, QVector<QString> _Data)
+{
+    setPath(_Path);
+    Changed=true;
+    Data = _Data;
 }

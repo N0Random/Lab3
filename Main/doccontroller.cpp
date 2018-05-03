@@ -1,5 +1,6 @@
 #include "doccontroller.h"
 
+#include <QDateTime>
 #include <qdir.h>
 
 
@@ -23,8 +24,7 @@ void DocController::SetNewDataDoc(QString newData)
 
 void DocController::PopDoc(int index)
 {
-
-    if(index)
+    if(index )
           setCurrentDoc(index-1);
     else
           setCurrentDoc(index+1);
@@ -59,10 +59,29 @@ QList<Document *> DocController::getAllDoc() const
 
 DocController::DocController()
 {
-    QDir dir;
-    QString name=dir.absolutePath()+"/new_doc.txt";
-    CurrentDoc=new Document(name);
-    connect(this,&DocController::addQueueCom,&DocController::DoCommand);
+   AddCommand("read",new ReadDoc());
+   AddCommand("write",new WriteDoc());
+   AddCommand("delete",new DeleteDoc());
+   AddCommand("clear",new ClearDoc());
+   timeStart=QDateTime::currentDateTimeUtc();
+   QDir dir;
+   QString name=dir.absolutePath()+"/new_doc.txt";
+   CurrentDoc=new Document(name);
+   connect(this,&DocController::addQueueCom,&DocController::DoCommand);
+}
+
+DocController::~DocController()
+{
+    if(!logCommands.isEmpty())
+    {
+        QDir dir;
+        QString name=dir.absolutePath()+"/Log/log_("+timeStart.toString("ddMMyyyy_hhmmss")+"-"
+                +QDateTime::currentDateTimeUtc().toString("ddMMyyyy_hhmmss")+").txt";
+        AddDoc(new Document(name,logCommands));
+        AddExecCommand("write");
+    }
+    for(auto iter : AllDoc)
+        delete iter;
 }
 
 void DocController::AddCommand(QString NameCom, IDocCommands *Com)
@@ -79,7 +98,9 @@ void DocController::DoCommand()
         if(mapComands.contains(NameCommande) and CurrentDoc)
         {
             mapComands[NameCommande]->execute();
-            logCommands.append(NameCommande+":"+CurrentDoc->getName());
+            logCommands.append("<"+NameCommande+":"+CurrentDoc->getName()+"; \n Path:"
+                               +CurrentDoc->getPath()+"; \n Time:"
+                               +QDateTime::currentDateTime().toString()+"> \n");
         }
     }
 }

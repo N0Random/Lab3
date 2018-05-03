@@ -21,6 +21,7 @@ private:
 public:
     Document();
     Document(QString _Path);
+    Document(QString _Path,QVector<QString> _Data);
 
     QString getPath() const;
     void setPath(const QString &_Path);
